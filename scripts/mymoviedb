@@ -1,0 +1,46 @@
+#!/bin/bash
+
+set -e
+
+# 1. Create site root directory @ /var/www/mymoviedb
+#   - permissions = 2755, root:webadmin
+# 2. Modify current config of apache2 to serve this directory by default
+#   - Make sure cgi works
+# 3. Enable new site and test
+
+# create site root directory (/var/www/mymoviedb)
+SITE_HOME=/var/www/mymoviedb
+mkdir -p "$SITE_HOME"
+chmod 2755 "$SITE_HOME"
+
+# make webadmin group, if not exist, and add users
+WEBADMIN=webadmin
+GROUP_ID=3000
+MEMBERS=('ethan' 'dad' 'www-data')
+if ! grep -q "$WEBADMIN" /etc/group; then
+  echo "[INFO] creating and initializing group $WEBADMIN"
+  groupadd -g "$GROUP_ID" "$WEBADMIN"
+  for MEMBER in "${MEMBERS[@]}"; do
+    echo "[INFO] adding $MEMBER"
+    usermod -aG "$WEBADMIN" "$MEMBER"
+  done
+fi
+sudo chown -R root:webadmin "$SITE_HOME"
+
+# modify current apache2 config
+# did not have to do anything, just made edits to log dir
+# and permissions of that directory tree (should have been
+# done in the first place)
+
+# chores
+a2ensite mymoviedb
+systemctl restart apache2
+
+# make sure cgi works (in current state of backend)
+if ! curl -sS -X POST -d 'film_name=gran turismo' \
+  http://home.local/cgi-bin/moviedb >/dev/null 2>&1; then
+  echo '[ERROR] failed to reach /cgi-bin/moviesdb'
+  exit 1
+fi
+
+echo -e "\e[32mconfig complete\e[0m"

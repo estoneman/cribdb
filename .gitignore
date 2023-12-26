@@ -1,0 +1,4 @@
+*.txt
+cgi-bin/db/
+cgi-bin/out/
+cgi-bin/test
