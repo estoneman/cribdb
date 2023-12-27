@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Film Database</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header style="text-align: center">
+    <h1>The Crib Movie Database</h1>
+  </header>
+  <div class="container">
+    <div class="sub-container">
+      <h2>Add Film</h2>
+      <form id="addFilmForm" class="form" method="POST" action="/cgi-bin/moviedb">
+        <div class="sub-group">
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="name" required>
+        </div>
+        <div class="sub-group">
+          <label for="release">Release Date:</label>
+          <input type="text" id="release" name="release" required>
+        </div>
+        <div class="sub-group">
+          <label for="score">Score (0-10):</label>
+          <input type="text" id="score" name="score" required>
+        </div>
+        <div class="sub-group">
+          <label for="rating">Rating:</label>
+          <input type="text" id="rating" name="rating" required>
+        </div>
+        <div class="sub-group">
+          <label for="cast">Cast:</label>
+          <input type="text" id="cast" name="cast" required>
+        </div>
+        <div class="sub-group">
+          <button type="submit">Add Film</button>
+        </div>
+      </form>
+      <div class="sub-group">
+        <a href="http://home.local/index.html">Home</a>
+      </div>
+    </div>
+    <div class="sub-container">
+      <h2>File Upload</h2>
+    </div>
+  </div>
+</body>
