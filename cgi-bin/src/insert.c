@@ -38,7 +38,7 @@ int main() {
 	printf("Content-Type: text/html\r\n");
   printf("Cache-Control: no-cache, no-store, must-revalidate\r\n");
   printf("X-Frame-Options: DENY\r\n");
-  printf("Referrer-Policy: noreferrer\r\n");
+  printf("Referrer-Policy: no-referrer\r\n");
   printf("X-Content-Type-Options: nosniff\r\n\r\n");
 
   char stdin_buf[BUF_CAP];
