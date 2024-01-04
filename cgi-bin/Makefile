@@ -7,28 +7,28 @@ SRC_DIR:=src
 SRC:=$(wildcard $(SRC_DIR)/*.c)
 
 PROD_OUT_DIR:=/var/www/cgi-bin
-PROD_OUT:=moviedb
+# PROD_OUT:=moviedb
 
 DEV_OUT_DIR:=./out
-DEV_OUT:=dev-moviedb
+# DEV_OUT:=dev-moviedb
 
 VALID_TARGETS:=build clean help
 
 BUILD_TYPE:=dev # default build
+EXECUTABLES:=$(SRC:$(SRC_DIR)/%.c=%)
 
 ifeq ($(BUILD_TYPE), prod)
   CFLAGS:=$(CFLAGS_COMMON) -DPROD
-	BUILD:=$(PROD_OUT_DIR)/$(PROD_OUT)
+	BUILD:=$(PROD_OUT_DIR)
 else
 	CFLAGS:=$(CFLAGS_COMMON) -DDEV -g
-	BUILD:=$(DEV_OUT_DIR)/$(DEV_OUT)
+	BUILD:=$(DEV_OUT_DIR)
 endif
 
-all: $(BUILD)
+all: $(EXECUTABLES)
 
-$(BUILD): $(SRC)
-	$(CC) -o $@ $(CFLAGS) $(SRC) $(LDFLAGS)
-	@chmod a+x $@
+$(EXECUTABLES): % : $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -o $(BUILD)/$@ $< $(LDFLAGS)
 
 .PHONY:
 clean:
