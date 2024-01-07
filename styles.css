@@ -51,6 +51,10 @@ input[type="text"] {
   border-radius: 4px;
 }
 
+input[type="file"] {
+  margin-bottom: 15px;
+}
+
 .button {
   padding: 10px 20px;
   background-color: #007bff;
