@@ -33,7 +33,7 @@ void replace_plus(char **s) {
   }
 }
 
-int main() {
+int main(int UNUSED(argc), char **UNUSED(argv), char **envp) {
 #ifdef PROD
 	printf("Content-Type: text/html\r\n");
   printf("Cache-Control: no-cache, no-store, must-revalidate\r\n");
@@ -45,8 +45,16 @@ int main() {
   size_t input_sz = fread(stdin_buf, sizeof(char), BUF_CAP, stdin);
   char *content = malloc(sizeof(char) * input_sz + 1);
 
+  for (char **ptr = envp; *ptr; ++ptr) {
+    printf("%s\n<br>", *ptr);
+  }
+  (void)envp;
+
   strncpy(content, stdin_buf, input_sz);
   content[input_sz] = 0x00;
+
+  printf("received: %s\n<br><br>", content);
+  return 0;
 
   char db_path[] = "/var/mymoviedb/movies.db";
   sqlite3 *db;
